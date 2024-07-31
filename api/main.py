@@ -18,16 +18,16 @@ co = cohere.Client(api_key=api_key)
 # Initialiser l'application Flask
 app = Flask(__name__)
 
-@app.route('/ask', methods=['GET'])
+@app.route('/', methods=['GET'])
 def ask():
-    # Obtenir le message depuis les paramètres de la requête
-    message = request.args.get('message', default='Bonjour! Qui es-tu ?', type=str)
+    # Obtenir la question depuis le paramètre de la requête 'ask'
+    question = request.args.get('ask', default='Bonjour! Qui es-tu ?', type=str)
 
     # Générer la réponse avec Cohere
     try:
         stream = co.chat_stream( 
             model='command-r-plus',
-            message=message,
+            message=question,
             temperature=0.3,
             chat_history=[],
             prompt_truncation='AUTO',
